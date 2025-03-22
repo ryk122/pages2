@@ -37,6 +37,25 @@ function displayAffiliations(data) {
     //console.log(data)
 
     const container = document.getElementById('affiliations');
+
+
+    const section = document.createElement('div');  
+    section.innerHTML = `
+        <h2>新人</h2>
+        <ul>
+    `;
+    for(const [affiliation,person] of Object.entries(data)){
+        for (i = 0 ; i<person.length; i++) {
+            if(person[i].years<2){
+                section.innerHTML += `
+                    <a href="res/${person[i].name}.png" data-lightbox="group"><img src="res/${person[i].name}.png" alt="" width="100"></a>&nbsp;
+                `;
+            }
+        }
+    }
+    section.innerHTML += `</ul>`;
+    container.appendChild(section);
+
     for (const [affiliation, person] of Object.entries(data)) {
         const section = document.createElement('div');
         
