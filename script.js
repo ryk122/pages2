@@ -20,7 +20,12 @@ function parseCSV(data) {
         if (!result[affiliation]) {
             result[affiliation] = [];
         }
-        result[affiliation].push(name);
+
+        person = {name,years}
+
+        result[affiliation].push(person);
+
+        //result[affiliation]["person"].push(name);
 
     });
 
@@ -29,18 +34,22 @@ function parseCSV(data) {
 
 // 所属データをHTMLに表示する関数
 function displayAffiliations(data) {
-    console.log(data)
+    //console.log(data)
 
     const container = document.getElementById('affiliations');
-
-    for (const [affiliation, names] of Object.entries(data)) {
+    for (const [affiliation, person] of Object.entries(data)) {
         const section = document.createElement('div');
+        
         section.innerHTML = `
             <h2>${affiliation}</h2>
             <ul>
-                ${names.map(name => `<a href="res/${name}.png" data-lightbox="group"><img src="res/${name}.png" alt="" width="100"></a>&nbsp;`).join('')}
-            </ul>
-        `;
+            `;
+        for (i = 0 ; i<person.length; i++) {
+            section.innerHTML += `
+                <a href="res/${person[i].name}.png" data-lightbox="group"><img src="res/${person[i].name}.png" alt="" width="100"></a>&nbsp;
+            `;
+        }
+        section.innerHTML += `</ul>`;
         container.appendChild(section);
     }
 }
