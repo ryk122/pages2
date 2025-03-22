@@ -4,3 +4,54 @@
 csvは、１列目が氏名、２列目が所属、３列目が年数です。
 webページには、所属の項目があり、
 所属は読み込んだcsvから作成され、それぞれの項目の中に、そこに所属する人の氏名が記載されます。
+
+
+
+次のjavascrpitを改造して、
+<ul>${names.map(name => `<li>${name}</li>`).join('')}</ul>の部分を、
+name.pngをhtmlで表示するように改造して
+
+function displayAffiliations(data) {
+    const container = document.getElementById('affiliations');
+    for (const [affiliation, names] of Object.entries(data)) {
+        const section = document.createElement('div');
+        section.innerHTML = `<h2>${affiliation}</h2><ul>${names.map(name => `<li>${name}</li>`).join('')}</ul>`;
+        container.appendChild(section);
+    }
+}
+
+
+次のjavascrpitを改造して、
+<h2>${affiliation}</h2>の前に「新人」という項目を追加し、その中には、yearsが1以下のオブジェクトのnameを表示してください
+
+
+// CSVデータを解析する関数
+function parseCSV(data) {
+    const lines = data.trim().split('\n');
+    const result = {};
+
+    lines.forEach(line => {
+        const [name, affiliation, years] = line.split(',');
+
+        // 所属ごとにグループ化
+        if (!result[affiliation]) {
+            result[affiliation] = [];
+        }
+        result[affiliation].push(name);
+    });
+
+    return result;
+}
+function displayAffiliations(data) {
+    const container = document.getElementById('affiliations');
+    for (const [affiliation, names] of Object.entries(data)) {
+        const section = document.createElement('div');
+        section.innerHTML = `
+            <h2>${affiliation}</h2>
+            <ul>
+                ${names.map(name => `<a href="res/${name}.png" data-lightbox="group"><img src="res/${name}.png" alt="" width="100"></a>&nbsp;`).join('')}
+            </ul>
+        `;
+        container.appendChild(section);
+    }
+}

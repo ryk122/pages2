@@ -21,6 +21,7 @@ function parseCSV(data) {
             result[affiliation] = [];
         }
         result[affiliation].push(name);
+
     });
 
     return result;
@@ -28,17 +29,25 @@ function parseCSV(data) {
 
 // 所属データをHTMLに表示する関数
 function displayAffiliations(data) {
+    console.log(data)
+
     const container = document.getElementById('affiliations');
+
     for (const [affiliation, names] of Object.entries(data)) {
         const section = document.createElement('div');
-        section.innerHTML = `<h2>${affiliation}</h2><ul>${names.map(name => `<li>${name}</li>`).join('')}</ul>`;
+        section.innerHTML = `
+            <h2>${affiliation}</h2>
+            <ul>
+                ${names.map(name => `<a href="res/${name}.png" data-lightbox="group"><img src="res/${name}.png" alt="" width="100"></a>&nbsp;`).join('')}
+            </ul>
+        `;
         container.appendChild(section);
     }
 }
 
+//${names.map(name => `<img src="res/${name}.png" alt="${name}" class="popup"/>&nbsp;`).join('')}
+
 // 実行
-
-
 loadCSV('database.csv').then(data => {
     displayAffiliations(data);
 }); 

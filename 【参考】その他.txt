@@ -1,0 +1,5 @@
+画像ポップアップ
+https://toretama.jp/kouza/click-big-image-floaty.html
+
+
+<a href="gazou1.jpg" data-lightbox="group"><img src="gazou1.jpg" alt="" width="300"></a>
